@@ -1,4 +1,4 @@
-function ModalDialog(message, inputs, callback){
+function ModalDialog(message, inputs, okCallback, cancelCallback){
   let html = `<form id="dialog_confirm" title="${message}"><ul>`;
   for (let name in inputs) {
     var opts, wrapper;
@@ -50,10 +50,11 @@ function ModalDialog(message, inputs, callback){
     dialogClass: 'active_admin_dialog',
     buttons: {
       OK() {
-        callback($(this).serializeObject());
+        okCallback($(this).serializeObject());
         $(this).dialog('close');
       },
       Cancel() {
+        cancelCallback();
         $(this).dialog('close').remove();
       }
     }
