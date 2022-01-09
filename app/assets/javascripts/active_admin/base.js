@@ -24,7 +24,7 @@
   $.ui.dialog.prototype._focusTabbable = function() {
     this.uiDialog.focus();
   };
-  function ModalDialog(message, inputs, callback) {
+  function ModalDialog(message, inputs, okCallback, cancelCallback) {
     var html = '<form id="dialog_confirm" title="' + message + '"><ul>';
     for (var name in inputs) {
       var opts, wrapper;
@@ -72,10 +72,11 @@
       dialogClass: "active_admin_dialog",
       buttons: {
         OK: function OK() {
-          callback($(this).serializeObject());
+          okCallback($(this).serializeObject());
           $(this).dialog("close");
         },
         Cancel: function Cancel() {
+          cancelCallback();
           $(this).dialog("close").remove();
         }
       }
@@ -91,7 +92,7 @@
       if (message = $(this).data("confirm")) {
         ModalDialog(message, $(this).data("inputs"), function(inputs) {
           $(_this).trigger("confirm:complete", inputs);
-        });
+        }, function() {});
       } else {
         $(this).trigger("confirm:complete");
       }
@@ -505,9 +506,9 @@
     return $("#active_admin_content .tabs").tabs();
   };
   $(document).ready(onDOMReady$2).on("page:load turbolinks:load", onDOMReady$2);
-  function modal_dialog(message, inputs, callback) {
+  function modal_dialog(message, inputs, okCallback, cancelCallback) {
     console.warn("ActiveAdmin.modal_dialog is deprecated in favor of ActiveAdmin.ModalDialog, please update usage.");
-    return ModalDialog(message, inputs, callback);
+    return ModalDialog(message, inputs, okCallback, cancelCallback);
   }
   exports.ModalDialog = ModalDialog;
   exports.modal_dialog = modal_dialog;

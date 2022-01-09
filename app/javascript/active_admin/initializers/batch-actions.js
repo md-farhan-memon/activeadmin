@@ -16,7 +16,7 @@ const onDOMReady = function() {
     if ((message = $(this).data('confirm'))) {
       ModalDialog(message, $(this).data('inputs'), inputs => {
         $(this).trigger('confirm:complete', inputs);
-      });
+      }, function() {});
     } else {
       $(this).trigger('confirm:complete');
     }

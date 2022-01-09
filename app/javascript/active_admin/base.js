@@ -20,9 +20,9 @@ import "./initializers/tabs"
 
 import ModalDialog from "./lib/modal-dialog";
 
-function modal_dialog(message, inputs, callback) {
+function modal_dialog(message, inputs, okCallback, cancelCallback) {
   console.warn("ActiveAdmin.modal_dialog is deprecated in favor of ActiveAdmin.ModalDialog, please update usage.");
-  return ModalDialog(message, inputs, callback);
+  return ModalDialog(message, inputs, okCallback, cancelCallback);
 }
 
 export { ModalDialog, modal_dialog };
